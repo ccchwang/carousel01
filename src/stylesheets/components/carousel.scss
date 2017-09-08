@@ -1,0 +1,90 @@
+.carousel {
+  display: flex;
+  justify-content: space-between;
+  // position: relative;
+  align-items: center;
+  height: 95vh;
+  overflow: hidden;
+
+  button {
+    position: absolute;
+    bottom: 0;
+
+    &.-next {
+      margin-left: 90px;
+    }
+
+    &.disableClick {
+      pointer-events: none;
+    }
+  }
+}
+
+.carousel__viewport {
+  //display: flex;
+  overflow: hidden;
+  position: relative;
+
+  &.-prev {
+    width: 250px;
+    height: 60%;
+  }
+
+  &.-current {
+    width: 500px;
+    height: 100%;
+
+    .-placeRight {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+
+    .-moveLeft {
+      transform: translateX(0%);
+      transition: 0.5s;
+    }
+
+    .-active.-moveLeft {
+      transform: translateX(-100%);
+    }
+  }
+
+  .item {
+    width: inherit;
+    height: 100%;
+    min-width: 100%;
+    position: absolute;
+    opacity: 0;
+
+    // DELETE LATER, FOR NUMBERS
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 130px;
+
+    &.-active {
+      opacity: 1;
+    }
+
+    @for $i from 1 through 4 {
+      &:nth-child(#{$i}) {
+        background-image: url('/images/photo#{$i}.png');
+      }
+    }
+
+  }
+}
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+*/
