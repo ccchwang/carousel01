@@ -33,20 +33,6 @@
   &.-current {
     width: 500px;
     height: 100%;
-
-    .-placeRight {
-      opacity: 1;
-      transform: translateX(100%);
-    }
-
-    .-moveLeft {
-      transform: translateX(0%);
-      transition: 0.5s;
-    }
-
-    .-active.-moveLeft {
-      transform: translateX(-100%);
-    }
   }
 
   .item {
@@ -62,9 +48,6 @@
     align-items: center;
     font-size: 130px;
 
-    &.-active {
-      opacity: 1;
-    }
 
     @for $i from 1 through 4 {
       &:nth-child(#{$i}) {
@@ -72,6 +55,23 @@
       }
     }
 
+    &.-active {
+      opacity: 1;
+
+      &.-moveLeft {
+        transform: translateX(-100%);
+      }
+    }
+
+    &.-placeRight {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+
+    &.-moveLeft {
+      transform: translateX(0%);
+      transition: 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
   }
 }
 
