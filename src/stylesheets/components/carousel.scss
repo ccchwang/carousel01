@@ -48,7 +48,7 @@ $ease:  cubic-bezier(0.645, 0.045, 0.355, 1);
   @for $i from 1 through 4 {
     &:nth-child(#{$i}) {
       .item {
-        background-image: url('/img/photo#{$i}.jpg');
+        background-image: url('/images/photo#{$i}.jpg');
       }
     }
   }
