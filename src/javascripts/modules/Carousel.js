@@ -7,107 +7,136 @@ export default class Carousel {
 
   init() {
     let viewports = this.el.getElementsByClassName('carousel__viewport');
-    this.setViewport(viewports[1], 'currViewport');
-    this.setViewport(viewports[0], 'prevViewport');
+    this.setViewport(viewports[1], 'lgViewport');
+    this.setViewport(viewports[0], 'smViewport');
 
     let buttons = this.el.getElementsByClassName('controls');
     this.prevButton = buttons[0];
     this.nextButton = buttons[1];
 
+    this.counter = this.el.getElementsByClassName('counter')[0];
   }
 
   setViewport(viewport, viewportName) {
-    this[viewportName] = viewport;
-    this[`${viewportName}Items`] = [];
+    //initialize map of viewport items
+    this[`${viewportName}Map`] = [];
 
-    let items = [].slice.call(viewport.getElementsByClassName('item'));
+    //get all items inside viewport
+    let items = [].slice.call(viewport.getElementsByClassName('item-wrapper'));
 
+    //for each item, cache details in map
     items.forEach((item, i) => {
-      let lastIndex = items.length-1;
+      let lastIndex = items.length - 1;
       let next = i === lastIndex ? 0 : i + 1;
       let prev = i === 0 ? lastIndex : i - 1;
 
-      this[`${viewportName}Items`][i] = {item, next, prev};
+      this[`${viewportName}Map`][i] = { item, next, prev, index: i+1 };
 
+      //set active item
       if (item.classList.value.includes('-active')) {
-        this[`${viewportName}Active`] = this[`${viewportName}Items`][i];
+        this[`${viewportName}Active`] = this[`${viewportName}Map`][i];
       }
     })
   }
 
   bindEvents() {
-    this.nextButton.addEventListener('click', function() {
-      let nextNode = this.currViewportItems[this.currViewportActive.next];
-      let nextItem = nextNode.item;
-      let activeItem = this.currViewportActive.item;
+    this.nextButton.addEventListener('click', this.onClick.bind(this, 'next'));
+    this.prevButton.addEventListener('click', this.onClick.bind(this, 'prev'));
+  }
 
-      //disable click
-      this.nextButton.classList.add('disableClick');
+  onClick(direction) {
+    let movePos = direction === 'next' ? 'Left' : 'Right';
+    let placePos = direction === 'next' ? 'Right' : 'Left';
 
-      //move sibling to right
-      nextItem.classList.add('-placeRight')
+    //set next sibling node from map
+    let sibNode_L = this.lgViewportMap[this.lgViewportActive[direction]];
+    let sibNode_S = this.smViewportMap[this.smViewportActive[direction]];
 
-      //move both to left
-      setTimeout(function() {
-        activeItem.classList.add('-moveLeft');
-        nextItem.classList.add('-moveLeft');
-      }.bind(this), 100)
+    //set next sibling element
+    let sib_L = sibNode_L.item;
+    let sib_S = sibNode_S.item;
+
+    //set currently active element
+    let active_L = this.lgViewportActive.item;
+    let active_S = this.smViewportActive.item;
 
 
-      setTimeout(function() {
-        activeItem.classList.remove('-active');
-        activeItem.classList.remove('-moveLeft');
-
-        nextItem.classList.remove('-moveLeft');
-        nextItem.classList.remove('-placeRight');
-        nextItem.classList.add('-active');
-
-        //set new active
-        this.currViewportActive = nextNode;
-
-        //reenable click
-        this.nextButton.classList.remove('disableClick');
-      }.bind(this), 1100)
+    //disable click on button
+    this.nextButton.classList.add('disableClick');
+    this.prevButton.classList.add('disableClick');
 
 
 
-      //TODO - REFACTOR MOVE FOR PREV VIEWPORT
-      let nextNode2 = this.prevViewportItems[this.prevViewportActive.next];
-      let nextItem2 = nextNode2.item;
-      let activeItem2 = this.prevViewportActive.item;
+    /////**********************////change counter
+    let goingBack = direction === 'prev' ? true : false;
+    let classes = goingBack ? ' pre-animation -backward' : ' pre-animation';
+    this.counter.classList += classes;
 
-      //disable click
-      this.nextButton.classList.add('disableClick');
+    setTimeout(function(){
+      this.counter.classList.remove('pre-animation')
+      this.counter.classList.add('during-animation')
+      this.counter.innerHTML = sibNode_L.index;
+    }.bind(this), 200)
 
-      //move sibling to right
-      nextItem2.classList.add('-placeRight')
+    setTimeout(function(){
+      this.counter.classList.remove('during-animation');
 
-      //move both to left
-      setTimeout(function() {
-        activeItem2.classList.add('-moveLeft');
-        nextItem2.classList.add('-moveLeft');
-      }.bind(this), 100)
+      if (goingBack) { this.counter.classList.remove('-backward'); }
+    }.bind(this), 300)
+    /////******************////
 
 
-      setTimeout(function() {
-        activeItem2.classList.remove('-active');
-        activeItem2.classList.remove('-moveLeft');
 
-        nextItem2.classList.remove('-moveLeft');
-        nextItem2.classList.remove('-placeRight');
-        nextItem2.classList.add('-active');
+    //place siblings
+    this.placeSibling(sib_L, sib_S, placePos);
 
-        //set new active
-        this.prevViewportActive = nextNode2;
+    //move elements
+    setTimeout(
+      this.moveElements.bind(this, active_L, active_S, sib_L, sib_S, movePos)
+    , 50)
 
-        //reenable click
-        this.nextButton.classList.remove('disableClick');
-      }.bind(this), 1100)
-      /*
-        1. when next button is pressed, the immediate next one gains opacity and is placed right next to outside of carousel.
+    //remove classes and set new active element
+    setTimeout(function () {
+      this.removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos);
+      this.setNewActive(sib_L, sib_S, sibNode_L, sibNode_S);
+    }.bind(this), 1050)
 
-      */
-    }.bind(this));
+  }
+
+  placeSibling(sib_L, sib_S, pos) {
+    sib_L.classList.add(`-place${pos}`);
+    sib_S.classList.add(`-place${pos}`);
+  }
+
+  moveElements(active_L, active_S, sib_L, sib_S, pos) {
+    active_L.classList.add(`-move${pos}`);
+    active_S.classList.add(`-move${pos}`);
+
+    sib_L.classList.add(`-move${pos}`);
+    sib_S.classList.add(`-move${pos}`);
+  }
+
+  removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos) {
+    active_L.classList.remove('-active');
+    active_L.classList.remove(`-move${movePos}`);
+    active_S.classList.remove('-active');
+    active_S.classList.remove(`-move${movePos}`);
+
+    sib_L.classList.remove(`-move${movePos}`);
+    sib_L.classList.remove(`-place${placePos}`);
+    sib_S.classList.remove(`-move${movePos}`);
+    sib_S.classList.remove(`-place${placePos}`);
+
+    this.nextButton.classList.remove('disableClick');
+    this.prevButton.classList.remove('disableClick');
+  }
+
+  setNewActive(sib_L, sib_S, sibNode_L, sibNode_S) {
+    sib_L.classList.add('-active');
+    sib_S.classList.add('-active');
+
+    this.lgViewportActive = sibNode_L;
+    this.smViewportActive = sibNode_S;
   }
 }
 

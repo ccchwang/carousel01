@@ -1,14 +1,17 @@
+$ease:  cubic-bezier(0.645, 0.045, 0.355, 1);
+
 .carousel {
-  display: flex;
-  justify-content: space-between;
-  // position: relative;
+  //position: relative;
   align-items: center;
+  display: flex;
   height: 95vh;
+  justify-content: space-between;
   overflow: hidden;
 
   button {
-    position: absolute;
     bottom: 0;
+    left: 0;
+    position: absolute;
 
     &.-next {
       margin-left: 90px;
@@ -20,71 +23,144 @@
   }
 }
 
+.carousel__content {
+  height: 40%;
+  padding-left: 7vw;
+  width: 30vw;
+}
+
 .carousel__viewport {
-  //display: flex;
   overflow: hidden;
   position: relative;
 
-  &.-prev {
-    width: 250px;
+  &.-small {
+    width: 10vw;
     height: 60%;
   }
 
-  &.-current {
-    width: 500px;
+  &.-large {
+    width: 60vw;
     height: 100%;
   }
+}
 
-  .item {
-    width: inherit;
-    height: 100%;
-    min-width: 100%;
-    position: absolute;
-    opacity: 0;
-
-    // DELETE LATER, FOR NUMBERS
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 130px;
-
-
-    @for $i from 1 through 4 {
-      &:nth-child(#{$i}) {
-        background-image: url('/images/photo#{$i}.png');
+.item-wrapper {
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      .item {
+        background-image: url('/img/photo#{$i}.jpg');
       }
+    }
+  }
+}
+
+.carousel__viewport.-large {
+
+  .item-wrapper {
+    &::before {
+      content: 'HELLO MY NAME IS SPRING';
+      font-size: 50px;
+      left: 0;
+      padding-left: 17vw;
+      opacity: 0;
+      position: fixed;
+      top: 50px;
+      transform: translateX(50px);
+      transition: transform 1s $ease, opacity 1s $ease;
+      width: 100%;
+      z-index: 1;
     }
 
     &.-active {
-      opacity: 1;
+      &::before {
+        opacity: 1;
+        transform: translateX(0px);
+      }
 
-      &.-moveLeft {
-        transform: translateX(-100%);
+      &.-moveLeft::before {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+
+      &.-moveRight::before {
+        opacity: 0;
+        transform: translateX(100px);
       }
     }
 
-    &.-placeRight {
-      opacity: 1;
-      transform: translateX(100%);
+    &.-placeLeft::before {
+      transform: translateX(-50px);
     }
+  }
+}
 
-    &.-moveLeft {
-      transform: translateX(0%);
-      transition: 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-    }
+
+.item {
+  background-size: cover;
+  height: 100%;
+  min-width: 100%;
+  opacity: 0;
+  position: absolute;
+  width: inherit;
+
+  .-active & {
+    opacity: 1;
+  }
+
+  .-active.-moveLeft & {
+    transform: translateX(-100%);
+  }
+
+  .-active.-moveRight & {
+    transform: translateX(100%);
+  }
+
+  .-placeRight & {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+
+  .-placeLeft & {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+
+  .-moveLeft &, .-moveRight & {
+    transform: translateX(0%);
+    transition: 1s $ease;
   }
 }
 
 
 
 
-/*
 
 
+.counter-wrapper {
+  overflow: hidden;
+  transform: rotate(-90deg);
 
+  .counter {
+    display: inline-block;
+    transition: transform 0.3s $ease;
 
+    &.pre-animation {
+      transform: translateY(-20px);
+    }
 
+    &.during-animation {
+      transform: translateY(20px);
+      transition: 0s;
+    }
 
+    &.-backward {
+      &.pre-animation {
+        transform: translateY(20px);
+      }
 
-
-*/
+      &.during-animation {
+        transform: translateY(-20px);
+      }
+    }
+  }
+}
