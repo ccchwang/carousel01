@@ -57,8 +57,23 @@ $ease:  cubic-bezier(0.645, 0.045, 0.355, 1);
 .carousel__viewport.-large {
 
   .item-wrapper {
+    &:nth-child(1)::before {
+      content: 'Fall/Winter 17';
+    }
+
+    &:nth-child(2)::before {
+      content: 'Athletics 16/17';
+    }
+
+    &:nth-child(3)::before {
+      content: 'Basics Capsule Collection';
+    }
+
+    &:nth-child(4)::before {
+      content: 'Study on Textures';
+    }
+
     &::before {
-      content: 'HELLO MY NAME IS SPRING';
       font-size: 50px;
       left: 0;
       padding-left: 17vw;
