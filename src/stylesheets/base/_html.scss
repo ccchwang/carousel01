@@ -9,9 +9,11 @@ body {
   position: relative;
   height: 100vh;
   overflow: hidden;
+  font-family: 'Timmana'
 }
 
 nav {
   height: $navHeight;
-  min-height: 37px;
+  min-height: 50px;
+  padding: 0 10vw;
 }
