@@ -99,7 +99,7 @@ export default class Carousel {
     setTimeout(function () {
       this.removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos);
       this.setNewActive(sib_L, sib_S, sibNode_L, sibNode_S);
-    }.bind(this), 1350)
+    }.bind(this), 1400)
 
   }
 
