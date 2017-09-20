@@ -5,8 +5,10 @@
   "repository": "https://github.com/chloehwang/carousel01.git",
   "author": "Chloe Hwang <c.chloeh@gmail.com>",
   "license": "MIT",
+  "homepage": "https://chloehwang.github.io/carousel01/",
   "scripts": {
-    "start": "yarn run blendid"
+    "start": "yarn run blendid",
+    "build": "yarn run blendid -- build"
   },
   "dependencies": {
     "blendid": "^4.2.0"
