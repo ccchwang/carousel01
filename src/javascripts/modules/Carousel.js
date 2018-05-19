@@ -8,18 +8,15 @@ export default class Carousel {
   }
 
   init() {
-    let viewports = this.el.getElementsByClassName('carousel__viewport');
+    let viewports      = this.el.getElementsByClassName('carousel__viewport');
     this.lgViewportMap = this.setViewport(viewports[1], 'lgViewport');
     this.smViewportMap = this.setViewport(viewports[0], 'smViewport');
-
-    let buttons = this.el.getElementsByClassName('controls');
-    this.nextButton = buttons[1];
-    this.prevButton = buttons[0];
+    this.controls      = this.el.getElementsByClassName('controls')[0];
   }
 
   setViewport(viewport, viewportName) {
     let viewportMap = [];
-    let items = [].slice.call(viewport.getElementsByClassName('item-wrapper'));
+    let items       = [].slice.call(viewport.getElementsByClassName('item-wrapper'));
     this.cacheDetails(items, viewportMap, viewportName);
 
     return viewportMap;
@@ -28,8 +25,8 @@ export default class Carousel {
   cacheDetails(items, viewportMap, viewportName) {
     items.forEach((item, i) => {
       let lastIndex = items.length - 1;
-      let next = i === lastIndex ? 0 : i + 1;
-      let prev = i === 0 ? lastIndex : i - 1;
+      let next      = i === lastIndex ? 0 : i + 1;
+      let prev      = i === 0 ? lastIndex : i - 1;
 
       viewportMap[i] = { item, next, prev, index: i+1 };
 
@@ -41,11 +38,12 @@ export default class Carousel {
   }
 
   bindEvents() {
-    this.nextButton.addEventListener('click', _throttle(this.onClick.bind(this, 'next'), 1500));
-    this.prevButton.addEventListener('click', _throttle(this.onClick.bind(this, 'prev'), 1500));
+    this.controls.addEventListener('click', _throttle(this.onClick, 1500));
   }
 
-  onClick(direction) {
+  onClick = (e) => {
+    let direction = e.target.dataset.dir;
+
     let movePos = direction === 'next' ? 'Left' : 'Right';
     let placePos = direction === 'next' ? 'Right' : 'Left';
 
