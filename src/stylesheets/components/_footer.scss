@@ -4,6 +4,7 @@ footer {
   display: flex;
   font-family: 'Khula';
   font-size: 15px;
+  font-weight: bold;
   height: calc(100% - #{$sm-carousel-height} - #{$sm-carousel-margin-top} - 27px);
   justify-content: space-between;
   position: absolute;
@@ -12,35 +13,36 @@ footer {
 
 .view-link {
   border-bottom: 2px solid black;
-  font-weight: bold;
 }
 
 .counter-wrapper {
+  height: 11px;
+  line-height: 1;
   overflow: hidden;
   transform: rotate(-90deg);
+}
 
-  .counter {
-   // will-change: transform;
-    display: inline-block;
-    transition: transform 0.3s $easing;
+.counter {
+  display: inline-block;
+  transition: transform 0.3s $easing;
 
+  &.pre-animation {
+    transform: translateY(-20px);
+    transition-delay: 0.5s;
+  }
+
+  &.during-animation {
+    transform: translateY(20px);
+    transition: 0s;
+  }
+
+  &.-backward {
     &.pre-animation {
-      transform: translateY(-20px);
+      transform: translateY(20px);
     }
 
     &.during-animation {
-      transform: translateY(20px);
-      transition: 0s;
-    }
-
-    &.-backward {
-      &.pre-animation {
-        transform: translateY(20px);
-      }
-
-      &.during-animation {
-        transform: translateY(-20px);
-      }
+      transform: translateY(-20px);
     }
   }
 }

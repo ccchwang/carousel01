@@ -45,7 +45,11 @@ export default class Carousel {
   onClick = (e) => {
     let direction = e.target.dataset.dir;
 
-    let movePos = direction === 'next' ? 'Left' : 'Right';
+    if (!direction) {
+      return;
+    }
+
+    let movePos  = direction === 'next' ? 'Left' : 'Right';
     let placePos = direction === 'next' ? 'Right' : 'Left';
 
     //set next sibling node from map
@@ -60,26 +64,9 @@ export default class Carousel {
     let active_L = this.lgViewportActive.item;
     let active_S = this.smViewportActive.item;
 
-      /////**********************////change counter
-    let goingBack = direction === 'prev' ? true : false;
-    let classes = goingBack ? ' pre-animation -backward' : ' pre-animation';
-    this.counter.classList += classes;
-
-    setTimeout(function(){
-      this.counter.classList.remove('pre-animation')
-      this.counter.classList.add('during-animation')
-      this.counter.innerHTML = sibNode_L.index;
-    }.bind(this), 200)
-
-    setTimeout(function(){
-      this.counter.classList.remove('during-animation');
-
-      if (goingBack) { this.counter.classList.remove('-backward'); }
-    }.bind(this), 300)
-  /////******************////
-
     this.placeSibling(sib_L, sib_S, placePos);
     this.moveElements(active_L, active_S, sib_L, sib_S, movePos);
+    this.advanceCounter(direction, sibNode_L)
     this.removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos);
     this.setNewActive(sib_L, sib_S, sibNode_L, sibNode_S);
   }
@@ -97,6 +84,31 @@ export default class Carousel {
       sib_L.classList.add(`-move${pos}`);
       sib_S.classList.add(`-move${pos}`);
     }, 50)
+  }
+
+  advanceCounter(dir, sibNode_L) {
+    let goingBack = dir === 'prev' ? true : false;
+    let classes   = goingBack ? ' pre-animation -backward' : ' pre-animation';
+    this.counter.classList += classes;
+
+    this.changeCount(sibNode_L)
+    this.finishAdvance(goingBack)
+  }
+
+  changeCount(sibNode_L) {
+    setTimeout(() => {
+      this.counter.classList.add('during-animation')
+      this.counter.classList.remove('pre-animation')
+      this.counter.innerHTML = sibNode_L.index;
+    }, 600)
+  }
+
+  finishAdvance(goingBack) {
+    setTimeout(() => {
+      this.counter.classList.remove('during-animation');
+
+      if (goingBack) { this.counter.classList.remove('-backward'); }
+    }, 800)
   }
 
   removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos) {
