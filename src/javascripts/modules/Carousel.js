@@ -1,3 +1,5 @@
+import _throttle from 'lodash.throttle';
+
 export default class Carousel {
   constructor(el) {
     this.el = el;
@@ -13,16 +15,14 @@ export default class Carousel {
     let buttons = this.el.getElementsByClassName('controls');
     this.nextButton = buttons[1];
     this.prevButton = buttons[0];
-
-    this.counter = this.el.getElementsByClassName('counter')[0];
   }
 
   setViewport(viewport, viewportName) {
     let viewportMap = [];
     let items = [].slice.call(viewport.getElementsByClassName('item-wrapper'));
-    this.cacheDetails(items, viewportMap, viewportName)
+    this.cacheDetails(items, viewportMap, viewportName);
 
-    return viewportMap
+    return viewportMap;
   }
 
   cacheDetails(items, viewportMap, viewportName) {
@@ -41,8 +41,8 @@ export default class Carousel {
   }
 
   bindEvents() {
-    this.nextButton.addEventListener('click', this.onClick.bind(this, 'next'));
-    this.prevButton.addEventListener('click', this.onClick.bind(this, 'prev'));
+    this.nextButton.addEventListener('click', _throttle(this.onClick.bind(this, 'next'), 1500));
+    this.prevButton.addEventListener('click', _throttle(this.onClick.bind(this, 'prev'), 1500));
   }
 
   onClick(direction) {
@@ -61,16 +61,10 @@ export default class Carousel {
     let active_L = this.lgViewportActive.item;
     let active_S = this.smViewportActive.item;
 
-    this.disableClicks()
     this.placeSibling(sib_L, sib_S, placePos);
-    this.moveElements(active_L, active_S, sib_L, sib_S, movePos)
+    this.moveElements(active_L, active_S, sib_L, sib_S, movePos);
     this.removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos);
     this.setNewActive(sib_L, sib_S, sibNode_L, sibNode_S);
-  }
-
-  disableClicks = () => {
-    this.nextButton.classList.add('disableClick');
-    this.prevButton.classList.add('disableClick');
   }
 
   placeSibling(sib_L, sib_S, pos) {
@@ -89,7 +83,7 @@ export default class Carousel {
   }
 
   removeClasses(active_L, active_S, sib_L, sib_S, movePos, placePos) {
-    setTimeout(() => {
+    setTimeout(function() {
       active_L.classList.remove('-active');
       active_L.classList.remove(`-move${movePos}`);
       active_S.classList.remove('-active');
@@ -99,9 +93,6 @@ export default class Carousel {
       sib_L.classList.remove(`-place${placePos}`);
       sib_S.classList.remove(`-move${movePos}`);
       sib_S.classList.remove(`-place${placePos}`);
-
-      this.nextButton.classList.remove('disableClick');
-      this.prevButton.classList.remove('disableClick');
     }, 1400)
   }
 

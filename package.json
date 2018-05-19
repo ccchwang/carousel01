@@ -11,6 +11,7 @@
     "build": "yarn run blendid -- build"
   },
   "dependencies": {
-    "blendid": "^4.2.0"
+    "blendid": "^4.2.0",
+    "lodash.throttle": "^4.1.1"
   }
 }
