@@ -18,13 +18,14 @@ export default class Carousel {
   }
 
   setViewport(viewport, viewportName) {
-    //initialize map of viewport items
     let viewportMap = [];
-
-    //get all items inside viewport
     let items = [].slice.call(viewport.getElementsByClassName('item-wrapper'));
+    this.cacheDetails(items, viewportMap, viewportName)
 
-    //for each item, cache details in map
+    return viewportMap
+  }
+
+  cacheDetails(items, viewportMap, viewportName) {
     items.forEach((item, i) => {
       let lastIndex = items.length - 1;
       let next = i === lastIndex ? 0 : i + 1;
@@ -37,8 +38,6 @@ export default class Carousel {
         this[`${viewportName}Active`] = viewportMap[i];
       }
     })
-
-    return viewportMap
   }
 
   bindEvents() {
