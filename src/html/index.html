@@ -9,7 +9,6 @@
 {% block content %}
 
 <nav>
-  hello this is nav
 </nav>
 
 
@@ -29,7 +28,7 @@
     <p class="counter-wrapper">
       <span class="counter">1</span> / 4
     </p>
-    <p>View Collection</p>
+    <p class="view">View Collection</p>
   </div>
 
   {# large viewport #}
@@ -41,9 +40,9 @@
   </div>
 
   {# controls #}
-  <div class="controls">
-    <button class="control" data-dir="prev">Previous</button>
-    <button class="control -next" data-dir="next">Next</button>
+  <div class="carousel__controls">
+    <button class="carousel__control" data-dir="prev" aria-label="previous"></button>
+    <button class="carousel__control -next" data-dir="next" aria-label="next"></button>
   </div>
 </div>
 

@@ -25,16 +25,6 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
   height: 95vh;
   justify-content: space-between;
   overflow: hidden;
-
-  button {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-
-    &.-next {
-      margin-left: 90px;
-    }
-  }
 }
 
 .carousel__content {
@@ -43,6 +33,12 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
   height: 100%;
   padding: 160px 0 0 $content-left-padding;
   width: 100vw - $viewport-width-sm - $viewport-width-lg;
+
+  .view {
+    border-bottom: 2px solid black;
+    display: inline;
+    font-weight: bold;
+  }
 }
 
 .carousel__viewport {
@@ -177,6 +173,34 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
   .-moveRight & {
     transform: translateX(0%);
     transition: $viewport-timing-sm $easing;
+  }
+}
+
+.carousel__controls {
+  bottom: 6%;
+  display: flex;
+  justify-content: flex-end;
+  left: 0;
+  position: absolute;
+  width: $viewport-width-sm;
+}
+
+.carousel__control {
+  border-color: black;
+  border-style: solid;
+  border-width: 0 0 2px 2px;
+  cursor: pointer;
+  height: 18px;
+  transform: rotate(45deg);
+  width: 18px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.-next {
+    border-width: 2px 2px 0 0;
+    margin-left: 1em;
   }
 }
 
