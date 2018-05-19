@@ -7,12 +7,18 @@
 {% extends 'layouts/application.html' %}
 
 {% block content %}
-
 <nav>
 </nav>
 
-<div class="carousel" data-module="Carousel">
+<div class="small-screen">
+  <p>Best viewed on screens 960px+</p>
+  <hr />
+  <p class="small-screen__text">Study on <a href="https://github.com/chloehwang/carousel01" target="_blank">Carousels</a></p>
+  <p class="small-screen__text">Made by <a href="https://chloehwang.github.io/" target="_blank">Chloe Hwang</a></p>
+  <p class="small-screen__text">Copyright <span>2018</span></p>
+</div>
 
+<div class="carousel" data-module="Carousel">
   {# small viewport #}
   <div class="carousel__viewport -small">
     <div class="item-wrapper"><div class="item bg-1"></div></div>
@@ -42,12 +48,10 @@
 
     <p class="view-link">View Collection</p>
 
-    <p class="counter-wrapper">
-      <span class="counter">1</span> / 4
+    {# counter #}
+    <p class="carousel__counter-wrapper">
+      <span class="carousel__counter">1</span> / 4
     </p>
   </footer>
 </div>
-
-
-
 {% endblock %}

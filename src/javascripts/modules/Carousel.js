@@ -12,7 +12,7 @@ export default class Carousel {
     this.lgViewportMap = this.setViewport(viewports[1], 'lgViewport');
     this.smViewportMap = this.setViewport(viewports[0], 'smViewport');
     this.controls      = this.el.getElementsByClassName('carousel__controls')[0];
-    this.counter       = this.el.getElementsByClassName('counter')[0];
+    this.counter       = this.el.getElementsByClassName('carousel__counter')[0];
   }
 
   setViewport(viewport, viewportName) {

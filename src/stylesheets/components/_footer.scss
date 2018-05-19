@@ -14,35 +14,3 @@ footer {
 .view-link {
   border-bottom: 2px solid black;
 }
-
-.counter-wrapper {
-  height: 11px;
-  line-height: 1;
-  overflow: hidden;
-  transform: rotate(-90deg);
-}
-
-.counter {
-  display: inline-block;
-  transition: transform 0.3s $easing;
-
-  &.pre-animation {
-    transform: translateY(-20px);
-    transition-delay: 0.5s;
-  }
-
-  &.during-animation {
-    transform: translateY(20px);
-    transition: 0s;
-  }
-
-  &.-backward {
-    &.pre-animation {
-      transform: translateY(20px);
-    }
-
-    &.during-animation {
-      transform: translateY(-20px);
-    }
-  }
-}

@@ -196,3 +196,35 @@ $sm-carousel-margin-top: $header-top - $nav-min-height + 35px;
     margin-left: 1em;
   }
 }
+
+.carousel__counter-wrapper {
+  height: 11px;
+  line-height: 1;
+  overflow: hidden;
+  transform: rotate(-90deg);
+}
+
+.carousel__counter {
+  display: inline-block;
+  transition: transform 0.3s;
+
+  &.pre-animation {
+    transform: translateY(-20px);
+    transition-delay: 0.5s;
+  }
+
+  &.during-animation {
+    transform: translateY(20px);
+    transition: 0s;
+  }
+
+  &.-backward {
+    &.pre-animation {
+      transform: translateY(20px);
+    }
+
+    &.during-animation {
+      transform: translateY(-20px);
+    }
+  }
+}

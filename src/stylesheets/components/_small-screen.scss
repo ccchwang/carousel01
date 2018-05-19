@@ -1,0 +1,16 @@
+body {
+  @media screen and (max-width: 959px) {
+    background-image: linear-gradient(45deg, #802120, #cd624e);
+
+    .carousel,
+    nav {
+      display: none;
+    }
+  }
+}
+
+.small-screen {
+  @media screen and (min-width: 960px) {
+    display: none;
+  }
+}
