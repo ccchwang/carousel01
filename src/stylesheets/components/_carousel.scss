@@ -1,15 +1,16 @@
-$ease:  cubic-bezier(0.645, 0.045, 0.355, 1);
-$smViewportWidth: 8vw;
-$lgViewportWidth: 60vw;
-$contentLeftPadding: 9vw;
-$headerTop: 120px;
-$smViewportTiming: 1s;
-$lgViewportTiming: $smViewportTiming + 0.25s;
-$headerTiming: 0.45s;
-$headerEasing: cubic-bezier(0.39, 0.575, 0.565, 1);
-$headerTimingDelay: $smViewportTiming - 0.08s;
+$easing               : cubic-bezier(0.645, 0.045, 0.355, 1);
+$viewport-width-sm    : 8vw;
+$viewport-width-lg    : 60vw;
+$content-left-padding : 9vw;
+$header-top           : 120px;
+$viewport-timing-sm   : 1s;
+$viewport-timing-lg   : $viewport-timing-sm + 0.25s;
+$header-timing        : 0.45s;
+$header-easing-enter  : cubic-bezier(0.39, 0.575, 0.565, 1);
+$header-easing-exit   : cubic-bezier(.55,.06,.52,.99);
+$header-timing-delay  : $viewport-timing-sm - 0.08s;
 
-@keyframes NAME {
+@keyframes enterLeft {
   0%   {
     transform: translateX(-35px);
   }
@@ -40,8 +41,8 @@ $headerTimingDelay: $smViewportTiming - 0.08s;
   font-family: 'Khula';
   font-size: 18px;
   height: 100%;
-  padding: 160px 0 0 $contentLeftPadding;
-  width: 100vw - $smViewportWidth - $lgViewportWidth;
+  padding: 160px 0 0 $content-left-padding;
+  width: 100vw - $viewport-width-sm - $viewport-width-lg;
 }
 
 .carousel__viewport {
@@ -50,13 +51,13 @@ $headerTimingDelay: $smViewportTiming - 0.08s;
 
   &.-small {
     height: 65%;
-    margin-top: $headerTop - $navMinHeight + 35px;
-    width: $smViewportWidth;
+    margin-top: $header-top - $nav-min-height + 35px;
+    width: $viewport-width-sm;
   }
 
   &.-large {
     height: 100%;
-    width: $lgViewportWidth;
+    width: $viewport-width-lg;
   }
 }
 
@@ -76,9 +77,9 @@ $headerTimingDelay: $smViewportTiming - 0.08s;
       font-size: 95px;
       left: 0;
       opacity: 0;
-      padding-left: $smViewportWidth + $contentLeftPadding;
+      padding-left: $viewport-width-sm + $content-left-padding;
       position: fixed;
-      top: $headerTop;
+      top: $header-top;
       transform: translateX(40px);
       width: 100%;
       z-index: 1;
@@ -103,13 +104,13 @@ $headerTimingDelay: $smViewportTiming - 0.08s;
     &.-placeRight::before {
       opacity: 1;
       transform: translateX(0px);
-      transition: transform $headerTiming $headerEasing,
-                  opacity $headerTiming $headerEasing;
-      transition-delay: $headerTimingDelay;
+      transition: transform $header-timing $header-easing-enter,
+                  opacity $header-timing $header-easing-enter;
+      transition-delay: $header-timing-delay;
     }
 
     &.-placeLeft::before {
-      animation: NAME $headerTiming $headerEasing $headerTimingDelay 1 forwards;
+      animation: enterLeft $header-timing $header-easing-enter $header-timing-delay 1 forwards;
     }
 
     &.-active::before {
@@ -120,21 +121,21 @@ $headerTimingDelay: $smViewportTiming - 0.08s;
     &.-active.-moveLeft::before {
       opacity: 0;
       transform: translateX(-12%);
-      transition: transform $headerTiming linear,
-                  opacity $headerTiming linear;
+      transition: transform $header-timing linear,
+                  opacity $header-timing linear;
     }
 
     &.-active.-moveRight::before {
       opacity: 0;
       transform: translateX(16%);
-      transition: transform 0.75s cubic-bezier(.55,.06,.52,.99),
-                  opacity 0.75s cubic-bezier(.55,.06,.52,.99);
+      transition: transform 0.75s $header-easing-exit,
+                  opacity 0.75s $header-easing-exit;
     }
 
     &.-moveLeft,
     &.-moveRight {
       .item {
-        transition: $lgViewportTiming cubic-bezier(.55,.06,.52,.99);
+        transition: $viewport-timing-lg $header-easing-exit;
       }
     }
   }
@@ -179,7 +180,7 @@ $headerTimingDelay: $smViewportTiming - 0.08s;
 
   .-moveLeft &, .-moveRight & {
     transform: translateX(0%);
-    transition: $smViewportTiming $ease;
+    transition: $viewport-timing-sm $easing;
   }
 }
 
