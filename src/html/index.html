@@ -11,7 +11,6 @@
 <nav>
 </nav>
 
-
 <div class="carousel" data-module="Carousel">
 
   {# small viewport #}
@@ -22,13 +21,8 @@
     <div class="item-wrapper -active"><div class="item bg-4"></div></div>
   </div>
 
-  {# text content #}
   <div class="carousel__content">
     <p>Collection</p>
-    <p class="counter-wrapper">
-      <span class="counter">1</span> / 4
-    </p>
-    <p class="view">View Collection</p>
   </div>
 
   {# large viewport #}
@@ -39,11 +33,19 @@
     <div class="item-wrapper"><div class="item bg-4"></div></div>
   </div>
 
-  {# controls #}
-  <div class="carousel__controls">
-    <button class="carousel__control" data-dir="prev" aria-label="previous"></button>
-    <button class="carousel__control -next" data-dir="next" aria-label="next"></button>
-  </div>
+  <footer>
+    {# controls #}
+    <div class="carousel__controls">
+      <button class="carousel__control" data-dir="prev" aria-label="previous"></button>
+      <button class="carousel__control -next" data-dir="next" aria-label="next"></button>
+    </div>
+
+    <p class="view-link">View Collection</p>
+
+    <p class="counter-wrapper">
+      <span class="counter">1</span> / 4
+    </p>
+  </footer>
 </div>
 
 

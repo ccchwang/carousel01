@@ -11,7 +11,8 @@ export default class Carousel {
     let viewports      = this.el.getElementsByClassName('carousel__viewport');
     this.lgViewportMap = this.setViewport(viewports[1], 'lgViewport');
     this.smViewportMap = this.setViewport(viewports[0], 'smViewport');
-    this.controls      = this.el.getElementsByClassName('controls')[0];
+    this.controls      = this.el.getElementsByClassName('carousel__controls')[0];
+    this.counter       = this.el.getElementsByClassName('counter')[0];
   }
 
   setViewport(viewport, viewportName) {
@@ -58,6 +59,24 @@ export default class Carousel {
     //set currently active element
     let active_L = this.lgViewportActive.item;
     let active_S = this.smViewportActive.item;
+
+      /////**********************////change counter
+    let goingBack = direction === 'prev' ? true : false;
+    let classes = goingBack ? ' pre-animation -backward' : ' pre-animation';
+    this.counter.classList += classes;
+
+    setTimeout(function(){
+      this.counter.classList.remove('pre-animation')
+      this.counter.classList.add('during-animation')
+      this.counter.innerHTML = sibNode_L.index;
+    }.bind(this), 200)
+
+    setTimeout(function(){
+      this.counter.classList.remove('during-animation');
+
+      if (goingBack) { this.counter.classList.remove('-backward'); }
+    }.bind(this), 300)
+  /////******************////
 
     this.placeSibling(sib_L, sib_S, placePos);
     this.moveElements(active_L, active_S, sib_L, sib_S, movePos);

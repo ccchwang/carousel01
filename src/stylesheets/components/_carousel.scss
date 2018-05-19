@@ -1,14 +1,16 @@
-$easing               : cubic-bezier(0.645, 0.045, 0.355, 1);
-$viewport-width-sm    : 8vw;
-$viewport-width-lg    : 60vw;
-$content-left-padding : 9vw;
-$header-top           : 120px;
-$viewport-timing-sm   : 1s;
-$viewport-timing-lg   : $viewport-timing-sm + 0.25s;
-$header-timing        : 0.45s;
-$header-easing-enter  : cubic-bezier(0.39, 0.575, 0.565, 1);
-$header-easing-exit   : cubic-bezier(.55,.06,.52,.99);
-$header-timing-delay  : $viewport-timing-sm - 0.08s;
+$easing                : cubic-bezier(0.645, 0.045, 0.355, 1);
+$viewport-width-sm     : 8vw;
+$viewport-width-lg     : 60vw;
+$content-left-padding  : 9vw;
+$header-top            : 120px;
+$viewport-timing-sm    : 1s;
+$viewport-timing-lg    : $viewport-timing-sm + 0.25s;
+$header-timing         : 0.45s;
+$header-easing-enter   : cubic-bezier(0.39, 0.575, 0.565, 1);
+$header-easing-exit    : cubic-bezier(.55,.06,.52,.99);
+$header-timing-delay   : $viewport-timing-sm - 0.08s;
+$sm-carousel-height    : 65%;
+$sm-carousel-margin-top: $header-top - $nav-min-height + 35px;
 
 @keyframes enterLeft {
   0%   {
@@ -33,12 +35,6 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
   height: 100%;
   padding: 160px 0 0 $content-left-padding;
   width: 100vw - $viewport-width-sm - $viewport-width-lg;
-
-  .view {
-    border-bottom: 2px solid black;
-    display: inline;
-    font-weight: bold;
-  }
 }
 
 .carousel__viewport {
@@ -46,8 +42,8 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
   position: relative;
 
   &.-small {
-    height: 65%;
-    margin-top: $header-top - $nav-min-height + 35px;
+    height: $sm-carousel-height;
+    margin-top: $sm-carousel-margin-top;
     width: $viewport-width-sm;
   }
 
@@ -177,12 +173,9 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
 }
 
 .carousel__controls {
-  bottom: 6%;
   display: flex;
+  flex-basis: $viewport-width-sm;
   justify-content: flex-end;
-  left: 0;
-  position: absolute;
-  width: $viewport-width-sm;
 }
 
 .carousel__control {
@@ -203,5 +196,3 @@ $header-timing-delay  : $viewport-timing-sm - 0.08s;
     margin-left: 1em;
   }
 }
-
-
