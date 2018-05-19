@@ -1,6 +1,8 @@
 body {
   @media screen and (max-width: 959px) {
-    background-image: linear-gradient(45deg, #802120, #cd624e);
+    align-items: center;
+    background-image: linear-gradient(45deg, #802120, #cd624e 60%);
+    display: flex;
 
     .carousel,
     nav {
@@ -10,6 +12,33 @@ body {
 }
 
 .small-screen {
+  color: white;
+  max-width: 650px;
+  padding: 0 2em;
+
+  p {
+    font-family: 'Khula';
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+
+    a,
+    span {
+      color: #ff7e6e;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    border-bottom: 2px solid white;
+    font-size: 95px;
+    line-height: 0.9;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.2em;
+  }
+
   @media screen and (min-width: 960px) {
     display: none;
   }
